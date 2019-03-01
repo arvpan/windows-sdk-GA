@@ -3,6 +3,28 @@ The Windows SDK for Google Analytics makes it easy to connect your Universal Win
 
 The SDK uses Google's [measurement protocol](https://developers.google.com/analytics/devguides/collection/protocol/) to send HTTP requests with user interaction data to Google's [Universal Analytics](https://support.google.com/analytics/answer/2790010) Services. The SDK also supports the [debug](https://developers.google.com/analytics/devguides/collection/protocol/v1/validating-hits) endpoint which will allows developers to test and validate their hits.
 
+The following are a few examples for a C# app. (If you prefer to see examples written for JavaScript or C++, the GitHub project includes additional samples in these languages.)
+
+var tracker =  AnalyticsManager.Current.CreateTracker("EnterYourPropertyIdHere");
+            AnalyticsManager.Current.ReportUncaughtExceptions = true;
+ 
+            //create a timing event 
+            var screenName = "MainPage";
+            TimeSpan timeSpanToLoad = TimeSpan.FromMilliseconds(237); // sample:) 
+            tracker.Send(HitBuilder.CreateTiming("load", screenName, timeSpanToLoad).Build());
+ 
+            //Send a page view 
+            tracker.ScreenName = screenName; 
+            tracker.Send(HitBuilder.CreateScreenView().Build()); 
+                          
+            // Send a userclick event 
+tracker.Send(HitBuilder.CreateEvent("user-events-category", "click", "sharing-button", 0).Build());
+ 
+            // Send a social interaction 
+            tracker.Send(HitBuilder.CreateSocialInteraction("facebook", "share", "link").Build());
+
+
+
 The SDK supports tracking for the following interaction ([Hit](https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#t)) types:
 
 - Screen Views 
